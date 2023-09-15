@@ -16,7 +16,7 @@ class App
 		}
 		
 		int total_sum = 0;
-		for (int i = 0; i < size_array; i++)
+		for (int i = 0; i < int_array.length; i++)
 		{
 			int value = int_array[i];
 			String is_even_odd = ((value + 1) % 2) == 0 ? "even" : "odd";
