@@ -124,18 +124,42 @@ class App
 		return true;
 	}
 
+	// Method to print out a given array to the standard output.
+	// Something important is supposed to be here.
+	public static void print_array(int arr[])
+	{
+		// This assumes that the array length is
+		// greater than one. This will break otherwise.
+		// Too bad!
+		for (int i = 0; i < arr.length - 1; i++)
+		{
+			System.out.print(arr[i]);
+			System.out.print(", ");
+		}
+		System.out.println(arr[arr.length - 1]);
+	}
+
 	public static void main(String args[])
 	{
 		int[] arrayToSort={1,3,4,5,1,23,57,126,4,543,345,23,12,45,67,97};// this creates the array.
 
+		// Print the array.
+		System.out.println("Unsorted array:");
+		print_array(arrayToSort);
+
 		// Sort the array.
 		bubbleSort(arrayToSort, true);
+
+		// Print the array again.
+		System.out.println("Sorted array:");
+		print_array(arrayToSort);
 
 		// Check if the array has been properly sorted.
 		// If it isn't, the assertion will fail.
 		assert array_is_sorted(arrayToSort, true) : "Array not sorted";
 
-		// If it is, then we tell the user.
+		// If it is, we give the user some dopamine
+		// by printing it worked.
 		System.out.println("The array was sorted correctly!");
 	}
 }
