@@ -26,10 +26,10 @@ import java.io.*;
 
 class App
 {
-	public static void main(String args[]) throws Exception
-	{
+    public static void main(String args[]) throws Exception
+    {
         // initialize the scanner
-		Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         // check the command-line parameters
         if (args.length > 0)
@@ -60,41 +60,41 @@ class App
 
         // initialize global variables
         String first_name = "";
-		String last_name = "";
+        String last_name = "";
         String grade = "";
         String school = "";
 
-		// read the first and last name
-		while (true)
-		{
-			System.out.print("Enter your first & last name: ");
-			String full_name = scanner.nextLine();
-			String parts[] = full_name.split(" ");
+        // read the first and last name
+        while (true)
+        {
+            System.out.print("Enter your first & last name: ");
+            String full_name = scanner.nextLine();
+            String parts[] = full_name.split(" ");
 
-			// if the input contained blank text
-			if (parts.length == 0 || full_name.length() == 0)
-			{
-				System.out.println("Please enter your name");
-				continue;
-			}
+            // if the input contained blank text
+            if (parts.length == 0 || full_name.length() == 0)
+            {
+                System.out.println("Please enter your name");
+                continue;
+            }
 
-			// if the input did not contain a last name,
-			// assume the last name is 'Doe'
-			if (parts.length == 1)
-			{
-				first_name = parts[0];
-				last_name = "Doe";
-				break;
-			}
+            // if the input did not contain a last name,
+            // assume the last name is 'Doe'
+            if (parts.length == 1)
+            {
+                first_name = parts[0];
+                last_name = "Doe";
+                break;
+            }
 
-			// if all else, capture the first & last name
-			if (parts.length > 1)
-			{
-				first_name = parts[0];
-				last_name = parts[parts.length - 1];
-				break;
-			}
-		}
+            // if all else, capture the first & last name
+            if (parts.length > 1)
+            {
+                first_name = parts[0];
+                last_name = parts[parts.length - 1];
+                break;
+            }
+        }
 
         // read the grade level
         System.out.print("Enter your current grade level (i.e. 11th, junior): ");
@@ -125,5 +125,5 @@ class App
         print_writer.close();
 
         System.out.printf("Wrote student data to file `%s'.\n", args[0]);
-	}
+    }
 }
