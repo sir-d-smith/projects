@@ -37,16 +37,13 @@ class App
         // initialize the output and regular expression
         ArrayList<String> output = new ArrayList<String>();
         Pattern pattern = Pattern.compile("([\\w\\d']+)");
+        Matcher matcher = pattern.matcher(input);
 
-        // split the string by spaces and then add ever word
-        // to the output if it matches the regular expression
-        for (String i : input.split(" "))
+        // loop through all matches found in the string
+        // and append them to the output
+        while (matcher.find())
         {
-            Matcher matcher = pattern.matcher(i);
-            if (!matcher.find())
-                continue;
-
-            output.add(matcher.group(0));
+            output.add(matcher.group());
         }
 
         return output;
