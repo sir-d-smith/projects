@@ -34,28 +34,26 @@ class App
         // check the command-line parameters
         if (args.length > 0)
         {
-            // check if the file given already exists
+            // check if the given file already exists
             File f = new File(args[0]);
             if (f.exists() && !f.isDirectory())
             {
                 // give the option to the user to overwrite
                 // the current file
-                while (true)
-                {
-                    System.out.printf("File `%s' exists. Overwrite? (yes/no): ", args[0]);
-                    String input = scanner.nextLine();
+                System.out.printf("File `%s' exists. Overwrite? (yes/no): ", args[0]);
+                String input = scanner.nextLine();
 
-                    if (input.toLowerCase().startsWith("y"))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        System.out.println("Aborting.");
-                        System.exit(1);
-                    }
+                if (!input.toLowerCase().startsWith("y"))
+                {
+                    System.out.println("Aborting.");
+                    System.exit(1);
                 }
             }
+        }
+        else
+        {
+            System.out.println("No input file given.\nUsage: file_write_week_2-1.0.0.jar <path to file>");
+            System.exit(1);
         }
 
         // initialize global variables
@@ -108,9 +106,9 @@ class App
         FileWriter file_writer = new FileWriter(args[0]);
         PrintWriter print_writer = new PrintWriter(file_writer);
 
+        // write data to file in configuration format
         try
         {
-            // write data to file in configuration format
             print_writer.printf("first_name=%s\n", first_name);
             print_writer.printf("last_name=%s\n", last_name);
             print_writer.printf("grade=%s\n", grade);
@@ -121,8 +119,9 @@ class App
             System.out.printf("Failed to write to file `%s': %s", args[0], e);
         }
 
-        // close file. also very important!
+        // close file & scanner. also very important!
         print_writer.close();
+        scanner.close();
 
         System.out.printf("Wrote student data to file `%s'.\n", args[0]);
     }
