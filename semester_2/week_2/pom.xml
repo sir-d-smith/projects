@@ -3,13 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example.hello_world_week_2</groupId>
-	<artifactId>hello_world_week_2</artifactId>
+	<groupId>com.example.file_write_week_2</groupId>
+	<artifactId>file_write_week_2</artifactId>
 	<version>1.0.0</version>
 
 	<properties>
-		<maven.compiler.source>19</maven.compiler.source>
-		<maven.compiler.target>19</maven.compiler.target>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -51,7 +52,7 @@
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
-								<mainClass>com.example.hello_world_week_2.App</mainClass>
+								<mainClass>com.example.file_write_week_2.App</mainClass>
 							</manifest>
 						</archive>
 					</configuration>
