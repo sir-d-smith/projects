@@ -3,7 +3,7 @@ package com.example.scanners_week_1;
 import java.util.*;
 
 // Daniel Smith (daniel.smith@malad.us)
-// CTE Software Development I
+// CTE Software Development II
 // Instructor Mr. Gross
 
 
