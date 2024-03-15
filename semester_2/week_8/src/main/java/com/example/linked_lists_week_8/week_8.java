@@ -30,10 +30,12 @@ class App
 {
     public static void main(String args[])
     {
+        // Initialize variables.
         Scanner scanner = new Scanner(System.in);
         LinkedList bucket = new LinkedList<Integer>();
         int num_items = -1;
 
+        // Ask the user how many numbers to add to the bucket.
         System.out.println("You will be adding a number of items to a linked list.");
         while (true)
         {
@@ -50,6 +52,7 @@ class App
             }
         }
 
+        // Add numbers to the bucket.
         for (int i = 0; i < num_items; i++)
         {
             while (true)
@@ -69,6 +72,7 @@ class App
             }
         }
 
+        // Print the bucket in normal order.
         Node<Integer> current_node = bucket.getFirstNode();
         System.out.println("Contents of linked list (in order):");
         for (int i = 0; i < bucket.max_nodes_can_search; i++)
@@ -85,6 +89,7 @@ class App
             }
         }
 
+        // Print the bucket in reverse order.
         current_node = bucket.getLastNode();
         System.out.println("Contents of linked list (in reverse order):");
         for (int i = 0; i < bucket.max_nodes_can_search; i++)
