@@ -31,13 +31,13 @@ public class Queue<T>
         this.list = new LinkedList<T>();
     }
 
-    // Pushes data to the stack.
+    // Pushes data to the queue.
     public void enqueue(T data)
     {
         list.appendLast(new Node<T>(data));
     }
     
-    // Pops data & returns data from the stack.
+    // Pops data & returns data from the queue.
     public T dequeue()
     {
         Node<T> node = list.getFirstNode();
