@@ -1,0 +1,21 @@
+For 'error.java':
+- Rename class from 'Main' to 'error' to more fit the filename
+- Move all code into a 'main' method
+- Capitalize and decapitalize statements & method calls
+- Fix typos
+- Add spacing for readability
+- Replace 'println' & 'print' method calls to 'printf' to ensure code works as intended
+- Fixed formatting as to make it consistent
+- Replace colons with semicolons where needed
+- Make the variable 'i' local to the 'main' method rather than soley in for loops, as
+  this would cause issues with later code
+
+For 'HelloWorldBad.java':
+- Fixed formatting as to make it consistent
+- Rewrite 'if (i=1)' as 'if (i == 1)' as to make the condition correct
+- Replace 'println' method calls to 'printf' to ensure code works as intended
+
+For 'HelloWorld.java':
+- Fixed formatting as to make it consistent
+- Add semicolons where there are none
+- Replace colons with semicolons where needed
