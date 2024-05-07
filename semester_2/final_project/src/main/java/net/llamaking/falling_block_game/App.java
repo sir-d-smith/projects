@@ -3,12 +3,16 @@ package net.llamaking.falling_block_game;
 import net.llamaking.falling_block_game.Logger.LoggerLevel;
 
 import java.io.PrintStream;
-import java.lang.Math;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+
+import org.lwjgl.BufferUtils;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import static org.lwjgl.stb.STBTruetype.*;
 
 // Daniel Smith (daniel.smith@malad.us)
 // CTE Software Development II
@@ -60,19 +64,8 @@ public class App
         return 1.0f - (2.0f * (y + (window_height/2))) / window_height;
     }
 
-    // private static void drawCube(float x, float y, float z, float r, float g, float b)
-    // {
-    //     GL11.glBegin(GL11.GL_QUADS);
-
-    //     GL11.glColor3f(r, g, b);
-    //     GL11.glVertex3f(x, y, z);
-    //     GL11.glVertex3f(x + 1.0f, y, z);
-    //     GL11.glVertex3f(x + 1.0f, y - 1.0f, z);
-    //     GL11.glVertex3f(x, y - 1.0f, z);
-
-    //     GL11.glEnd();
-    // }
-
+    // this is not how OpenGL was intended to be used.
+    // oh well, it is now!
     private static void drawCube(int x, int y, int width, int height, RGB color)
     {
         float gl_x = xPixelToGLCoordinate(x);
@@ -80,31 +73,14 @@ public class App
         float gl_width = xWidthToGLDelta(width);
         float gl_height = yWidthToGLDelta(height);
 
-        // float gl_x_delta = gl_x - gl_width;
-        // float gl_y_delta = gl_y - gl_height;
-
-        // float gl_x_delta_result = gl_x - gl_x_delta;
-        // float gl_y_delta_result = gl_y - gl_y_delta;
-
         GL11.glBegin(GL11.GL_QUADS);
 
         GL11.glColor3f(color.r, color.g, color.b);
-        // GL11.glColor3f(1.0f, 0.0f, 0.0f);
 
         GL11.glVertex2f(gl_x, gl_y);
         GL11.glVertex2f(gl_x + gl_width, gl_y);
         GL11.glVertex2f(gl_x + gl_width, gl_y + gl_height);
         GL11.glVertex2f(gl_x, gl_y + gl_height);
-
-        // GL11.glVertex2f(gl_x, gl_y);
-        // GL11.glVertex2f(gl_x - gl_x_delta, gl_y);
-        // GL11.glVertex2f(gl_x - gl_x_delta, gl_y - gl_y_delta);
-        // GL11.glVertex2f(gl_x, gl_y - gl_y_delta);
-
-        // GL11.glVertex2f(gl_x, gl_y);
-        // GL11.glVertex2f(gl_x + (gl_x - gl_width), gl_y);
-        // GL11.glVertex2f(gl_x + (gl_x - gl_width), gl_y + (gl_y - gl_height));
-        // GL11.glVertex2f(gl_x, gl_y + (gl_y - gl_height));
 
         GL11.glEnd();
 
@@ -156,12 +132,9 @@ public class App
         // Game loop.
         while (!GLFW.glfwWindowShouldClose(window))
         {
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+            GLFW.glfwPollEvents();
 
-            // drawCube(-1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-            // drawCube(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-            // drawCube(-1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-            // drawCube(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
             // if ((System.currentTimeMillis() - increment_time) >= increment_dt)
             // {
@@ -175,7 +148,6 @@ public class App
             GL11.glFlush();
 
             GLFW.glfwSwapBuffers(window);
-            GLFW.glfwPollEvents();
         }
 
         // Terminate GLFW.
