@@ -3,14 +3,12 @@ package net.llamaking.falling_block_game;
 import net.llamaking.falling_block_game.Logger.LoggerLevel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.nio.IntBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.json.JSONArray; 
 import org.json.JSONObject;
 
 import org.lwjgl.opengl.GL11;
@@ -82,9 +80,9 @@ public class TextureLoader
         return result;
     }
 
-    public ArrayList<Image> loadTextures()
+    public Map<String, Image> loadTextures()
     {
-        ArrayList<Image> textures = new ArrayList<Image>();
+        Map<String, Image> textures = new HashMap<>();
 
         File assets_json_file = new File(this.assets_json_path);
         if (!assets_json_file.exists())
@@ -112,6 +110,8 @@ public class TextureLoader
             return null;
         }
 
+        Image temp_image;
+
         for (String key : assets_json.keySet())
         {
             Object value = assets_json.get(key);
@@ -123,36 +123,17 @@ public class TextureLoader
 
             String path = (String)value;
 
-            logger.printf(LoggerLevel.DEBUG, "%s: %s", key, path);
+            temp_image = loadImage(path);
+
+            if (temp_image == null)
+            {
+                continue;
+            }
+
+            textures.put(key, temp_image);
         }
 
-        return null;
-
-        // for (File i : letters_dir.listFiles())
-        // {
-        //     if (!i.isFile() || !i.getName().endsWith("png"))
-        //     {
-        //         continue;
-        //     }
-
-        //     Image j = this.loadImage(i.getPath());
-        //     j.name = i.getName().replace(".png", "");
-        //     textures.add(j);
-
-        //     key_textures.put(j.name, j);
-        // }
-
-        // being reduntant, checking if any loaded images are null.
-        // hopefully an error was sent to the user if an image was not loaded.
-        // for (Image e : textures)
-        // {
-        //     if (e == null)
-        //     {
-        //         return false;
-        //     }
-        // }
-
-        // return true;
+        return textures;
     }
 
     public TextureLoader(Logger logger, String assets_json_path)

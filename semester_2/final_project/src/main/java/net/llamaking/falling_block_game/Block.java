@@ -28,8 +28,6 @@ public class Block
     private int x;
     private int y;
 
-    public static final int BLOCK_SIZE = 25;
-
     public Block(long id, BlockColor color, int x, int y)
     {
         this.id = id;
@@ -56,5 +54,50 @@ public class Block
     public int getY()
     {
         return this.y;
+    }
+
+    public static RGB blockColorToRGB(BlockColor block_color)
+    {
+        RGB result = null;
+
+        switch (block_color)
+        {
+            case BlockColor.GREY:
+                result = new RGB(255, 255, 255);
+                break;
+            
+            case BlockColor.CYAN:
+                result = new RGB(0, 255, 255);
+                break;
+            
+            case BlockColor.BLUE:
+                result = new RGB(0, 0, 255);
+                break;
+            
+            case BlockColor.ORANGE:
+                result = new RGB(255, 165, 0);
+                break;
+            
+            case BlockColor.YELLOW:
+                result = new RGB(255, 255, 0);
+                break;
+            
+            case BlockColor.GREEN:
+                result = new RGB(0, 255, 0);
+                break;
+            
+            case BlockColor.PURPLE:
+                result = new RGB(160, 32, 240);
+                break;
+            
+            case BlockColor.RED:
+                result = new RGB(255, 0, 0);
+                break;
+            
+            default:
+                break;
+        }
+
+        return result;
     }
 }
