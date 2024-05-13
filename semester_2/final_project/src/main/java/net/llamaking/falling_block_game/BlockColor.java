@@ -21,13 +21,14 @@ package net.llamaking.falling_block_game;
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-public class RGBA extends RGB
+public enum BlockColor
 {
-    public int a;
-
-    public RGBA(int r, int g, int b, int a)
-    {
-        super(r, g, b);
-        this.a = a;
-    }
+    GREY,
+    CYAN,
+    BLUE,
+    ORANGE,
+    YELLOW,
+    GREEN,
+    PURPLE,
+    RED
 }

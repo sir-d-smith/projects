@@ -1,5 +1,7 @@
 package net.llamaking.falling_block_game;
 
+import java.nio.ByteBuffer;
+
 // Daniel Smith (daniel.smith@malad.us)
 // CTE Software Development II
 // Instructor Mr. Gross
@@ -21,13 +23,13 @@ package net.llamaking.falling_block_game;
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-public class RGBA extends RGB
+public class Image
 {
-    public int a;
-
-    public RGBA(int r, int g, int b, int a)
-    {
-        super(r, g, b);
-        this.a = a;
-    }
+    public ByteBuffer pixel_data;
+    public int x;
+    public int y;
+    public int channels;
+    public int texture_id;
+    public String path;
+    public String name;
 }

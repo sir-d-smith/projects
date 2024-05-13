@@ -23,11 +23,11 @@ package net.llamaking.falling_block_game;
 
 public class RGB
 {
-    public float r;
-    public float g;
-    public float b;
+    public int r;
+    public int g;
+    public int b;
 
-    public RGB(float r, float g, float b)
+    public RGB(int r, int g, int b)
     {
         this.r = r;
         this.g = g;

@@ -41,9 +41,10 @@ public class Logger
     }
 
     // Important base variables for the class.
-    boolean is_active;
-    LoggerLevel min_level;
-    PrintStream stream;
+    private boolean is_active;
+    private LoggerLevel min_level;
+    private PrintStream stream;
+    private boolean use_pretty_colors;
 
     // Blank constructor. Uses default variables.
     public Logger()
@@ -51,6 +52,7 @@ public class Logger
         this.is_active = true;
         this.min_level = LoggerLevel.DEBUG;
         this.stream = System.err;
+        this.use_pretty_colors = false;
     }
 
     // Other constructor to let user decide what data to use.
@@ -59,8 +61,39 @@ public class Logger
         this.is_active = is_active;
         this.min_level = min_level;
         this.stream = stream;
+        this.use_pretty_colors = false;
     }
 
+    // Changes whether or not the logger uses very pretty colors.
+    public void usePrettyColors(boolean use_pretty_colors)
+    {
+        this.use_pretty_colors = use_pretty_colors;
+    }
+
+
+    private String logLevelToColorCode(LoggerLevel level)
+    {
+        switch (level)
+        {
+            case LoggerLevel.DEBUG:
+                return "\033[1;34m";
+                
+            case LoggerLevel.INFO:
+                return "\033[1;37m";
+
+            case LoggerLevel.WARNING:
+                return "\033[1;35m";
+
+            case LoggerLevel.ERROR:
+                return "\033[1;31m";
+
+            case LoggerLevel.CRITICAL:
+                return "\033[0;41;37m";
+            
+            default:
+                return "";
+        }
+    }
 
     // Prints the beginning of the logging message.
     // Warning: Don't use in nested methods! Only use directly once.
@@ -89,12 +122,24 @@ public class Logger
         int method_line_number = method_called.getLineNumber();
 
         // print to the console (or wherever the user selected)
-        this.stream.printf("%s [%s] %s@%s:%d : ", 
-                           date_time,
-                           level.name(),
-                           method_class_name,
-                           method_name,
-                           method_line_number);
+        if (!this.use_pretty_colors)
+        {
+            this.stream.printf("%s [%s] %s@%s:%d : ", 
+                               date_time,
+                               level.name(),
+                               method_class_name,
+                               method_name,
+                               method_line_number);
+        }
+        else
+        {
+            // made this for fun.
+            // not much practical use other than it looks cool.
+            this.stream.printf("\033[0;32m%s\033[0m ", date_time);
+            this.stream.printf("[%s%s\033[0m] ", logLevelToColorCode(level), level.name());
+            this.stream.printf("\033[0;36m%s\033[0m@\033[36m%s\033[0m:\033[36m%d\033[0m : ",
+                               method_class_name, method_name, method_line_number);
+        }
 
         return true;
     }
@@ -126,7 +171,7 @@ public class Logger
     }
 
     // Wrapper methods to shorten logger calls.
-    public void debug(String str)
+    public void debug(Object str)
     {
         if (!this.printStringFormat(LoggerLevel.DEBUG, 3))
             return;
@@ -134,7 +179,7 @@ public class Logger
         this.stream.println(str);
     }
 
-    public void info(String str)
+    public void info(Object str)
     {
         if (!this.printStringFormat(LoggerLevel.INFO, 3))
             return;
@@ -142,7 +187,7 @@ public class Logger
         this.stream.println(str);
     }
 
-    public void warning(String str)
+    public void warning(Object str)
     {
         if (!this.printStringFormat(LoggerLevel.WARNING, 3))
             return;
@@ -150,7 +195,7 @@ public class Logger
         this.stream.println(str);
     }
 
-    public void error(String str)
+    public void error(Object str)
     {
         if (!this.printStringFormat(LoggerLevel.ERROR, 3))
             return;
@@ -158,7 +203,7 @@ public class Logger
         this.stream.println(str);
     }
 
-    public void critical(String str)
+    public void critical(Object str)
     {
         if (!this.printStringFormat(LoggerLevel.CRITICAL, 3))
             return;
