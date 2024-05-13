@@ -2,7 +2,16 @@ package net.llamaking.falling_block_game;
 
 import net.llamaking.falling_block_game.Logger.LoggerLevel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.nio.IntBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import org.json.JSONArray; 
+import org.json.JSONObject;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;
@@ -31,7 +40,8 @@ import org.lwjgl.system.MemoryStack;
 
 public class TextureLoader
 {
-    Logger logger;
+    protected Logger logger;
+    protected String assets_json_path;
 
     public Image loadImage(String filepath)
     {
@@ -72,8 +82,82 @@ public class TextureLoader
         return result;
     }
 
-    public TextureLoader(Logger logger)
+    public ArrayList<Image> loadTextures()
+    {
+        ArrayList<Image> textures = new ArrayList<Image>();
+
+        File assets_json_file = new File(this.assets_json_path);
+        if (!assets_json_file.exists())
+        { 
+            logger.printf(LoggerLevel.ERROR, "assets.json (%s) does not exist", assets_json_path);
+            return null;
+        }
+        if (assets_json_file.isDirectory())
+        {
+            logger.printf(LoggerLevel.ERROR, "assets.json (%s) is a directory", assets_json_path);
+            return null;
+        }
+
+        JSONObject assets_json;
+
+        try
+        {
+            String text = Files.readString(Paths.get(assets_json_path));
+            assets_json = new JSONObject(text);
+        }
+        catch (Exception e)
+        {
+            logger.error("Error while parsing assets.json, showing stack trace");
+            e.printStackTrace();
+            return null;
+        }
+
+        for (String key : assets_json.keySet())
+        {
+            Object value = assets_json.get(key);
+            if (!(value instanceof String))
+            {
+                logger.warning("Found non-string in assets.json, continuing over");
+                continue;
+            }
+
+            String path = (String)value;
+
+            logger.printf(LoggerLevel.DEBUG, "%s: %s", key, path);
+        }
+
+        return null;
+
+        // for (File i : letters_dir.listFiles())
+        // {
+        //     if (!i.isFile() || !i.getName().endsWith("png"))
+        //     {
+        //         continue;
+        //     }
+
+        //     Image j = this.loadImage(i.getPath());
+        //     j.name = i.getName().replace(".png", "");
+        //     textures.add(j);
+
+        //     key_textures.put(j.name, j);
+        // }
+
+        // being reduntant, checking if any loaded images are null.
+        // hopefully an error was sent to the user if an image was not loaded.
+        // for (Image e : textures)
+        // {
+        //     if (e == null)
+        //     {
+        //         return false;
+        //     }
+        // }
+
+        // return true;
+    }
+
+    public TextureLoader(Logger logger, String assets_json_path)
     {
         this.logger = logger;
+        this.assets_json_path = assets_json_path;
     }
 }

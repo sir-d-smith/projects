@@ -156,51 +156,25 @@ public class App
         return;
     }
 
-    private static boolean loadTextures(TextureLoader textureloader)
-    {
-        block_texture = textureloader.loadImage("./assets/block.png");
-        block_texture.name = "block";
-        textures.add(block_texture);
-
-        File letters_dir = new File("./assets/letters/");
-        for (File i : letters_dir.listFiles())
-        {
-            if (!i.isFile() || !i.getName().endsWith("png"))
-            {
-                continue;
-            }
-
-            Image j = textureloader.loadImage(i.getPath());
-            j.name = i.getName().replace(".png", "");
-            textures.add(j);
-
-            key_textures.put(j.name, j);
-        }
-
-        // being reduntant, checking if any loaded images are null.
-        // hopefully an error was sent to the user if an image was not loaded.
-        for (Image e : textures)
-        {
-            if (e == null)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     private static void freeAndGo()
     {
         // Free textures used. Important!!
         logger.debug("Freeing textures");
-        for (Image i : textures)
+
+        if (textures == null)
         {
-            if (i.pixel_data == null)
+            logger.debug("Nothing to free!");
+        }
+        else
+        {
+            for (Image i : textures)
             {
-                continue;
+                if (i.pixel_data == null)
+                {
+                    continue;
+                }
+                STBImage.stbi_image_free(i.pixel_data);
             }
-            STBImage.stbi_image_free(i.pixel_data);
         }
 
         // Terminate GLFW.
@@ -257,8 +231,9 @@ public class App
 
         // Load textures.
         logger.debug("Loading textures");
-        TextureLoader textureloader = new TextureLoader(logger);
-        if (!loadTextures(textureloader))
+        TextureLoader textureloader = new TextureLoader(logger, "./assets/assets.json");
+        textures = textureloader.loadTextures();
+        if (textures == null)
         {
             logger.critical("Unable to load all textures, bailing");
             freeAndGo();
