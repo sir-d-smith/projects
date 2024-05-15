@@ -5,7 +5,7 @@
 
 	<groupId>net.llamaking.falling_block_game</groupId>
 	<artifactId>falling_block_game</artifactId>
-	<version>24-05.13.01</version>
+	<version>24-05.15.01</version>
 
 	<properties>
 		<java.version>22</java.version>

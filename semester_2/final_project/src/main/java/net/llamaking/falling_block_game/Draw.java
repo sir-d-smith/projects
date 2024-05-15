@@ -117,7 +117,7 @@ public class Draw
 
         GL11.glBegin(GL11.GL_QUADS);
 
-        GL11.glColor3f(red, green, blue);
+        // GL11.glColor3f(red, green, blue);
 
         GL11.glTexCoord2f(0, 0);
         GL11.glVertex2f(gl_x, gl_y);
