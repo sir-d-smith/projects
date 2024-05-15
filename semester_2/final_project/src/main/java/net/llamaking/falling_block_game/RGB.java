@@ -23,14 +23,21 @@ package net.llamaking.falling_block_game;
 
 public class RGB
 {
-    public int r;
-    public int g;
-    public int b;
+    public byte r;
+    public byte g;
+    public byte b;
 
-    public RGB(int r, int g, int b)
+    public RGB(byte r, byte g, byte b)
     {
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+
+    public RGB(int r, int g, int b)
+    {
+        this.r = (byte)r;
+        this.g = (byte)g;
+        this.b = (byte)b;
     }
 }

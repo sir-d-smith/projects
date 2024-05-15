@@ -27,8 +27,10 @@ import org.lwjgl.stb.STBImage;
 
 public class Game 
 {
-    Logger logger;
+    // Logger from the main class.
+    protected Logger logger;
 
+    // Private variables for safekeeping.
     private Map<String, Image> textures;
     private Grid<Block> grid;
     private Draw drawer;
@@ -40,6 +42,7 @@ public class Game
     private final int grid_y_offset = 25;
     private final int BLOCK_SIZE = 25;
 
+    // Constructor class.
     public Game(Logger logger, int window_width, int window_height)
     {
         this.logger = logger;
@@ -47,6 +50,7 @@ public class Game
         this.window_height = window_height;
     }
 
+    // Getters and setters for different constants in this class.
     public int getXOffset()
     {
         return this.grid_x_offset;
@@ -62,6 +66,7 @@ public class Game
         return this.BLOCK_SIZE;
     }
 
+    // Random number functions.
     private int genRandomNumber(int min, int max)
     {
         return min + (int)(Math.random() * ((max - min) + 1));
@@ -72,6 +77,7 @@ public class Game
         return (long)(Math.random() * Integer.MAX_VALUE + 1);
     }
 
+    // Initialize function.
     public boolean init()
     {
         grid = new Grid<Block>(10, 22);
@@ -89,6 +95,7 @@ public class Game
         return true;
     }
 
+    // Loads textures into memory and to the GPU.
     public boolean loadTextures()
     {
         TextureLoader textureloader = new TextureLoader(logger, "./assets/assets.json");
@@ -102,6 +109,7 @@ public class Game
         return true;
     }
 
+    // Free textures set in heap memory.
     public boolean freeTextures()
     {
         logger.debug("Freeing textures");
@@ -124,6 +132,7 @@ public class Game
         return true;
     }
 
+    // Draw the play field and the grid.
     public void drawPlayField()
     {
         // draw borders
@@ -152,6 +161,7 @@ public class Game
         }
     }
 
+    // Draw the blocks inside of the grid.
     public void drawBlocks()
     {
         Block temp_block;

@@ -23,5 +23,5 @@ package net.llamaking.falling_block_game;
 
 public class FallingBlock
 {
-    
+    // Nothing in here...
 }

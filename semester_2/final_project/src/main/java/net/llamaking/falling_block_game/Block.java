@@ -23,11 +23,13 @@ package net.llamaking.falling_block_game;
 
 public class Block
 {
+    // Private variables.
     private long id;
     private BlockColor color;
     private int x;
     private int y;
 
+    // Constructor.
     public Block(long id, BlockColor color, int x, int y)
     {
         this.id = id;
@@ -36,6 +38,7 @@ public class Block
         this.y = y;
     }
 
+    // Getter methods.
     public long getId()
     {
         return this.id;
@@ -56,6 +59,7 @@ public class Block
         return this.y;
     }
 
+    // Convert block colors to RGB values.
     public static RGB blockColorToRGB(BlockColor block_color)
     {
         RGB result = null;

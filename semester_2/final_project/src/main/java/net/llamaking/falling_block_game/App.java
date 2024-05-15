@@ -32,8 +32,7 @@ import org.lwjgl.opengl.GL11;
 
 public class App
 {
-    // make sure to create a grid of 10x22 size
-
+    // Private, global variables for this main class.
     private static PrintStream printstream = System.err;
     private static Logger logger = new Logger(true, LoggerLevel.DEBUG, printstream);
 
@@ -44,6 +43,7 @@ public class App
 
     private static Game game;
 
+    // Frees & closes different variables before exiting the program.
     private static void freeAndGo()
     {
         // Free textures used. Important!!
@@ -112,6 +112,7 @@ public class App
         }
         logger.info("Successfully loaded textures!");
 
+        // Initialize the game class.
         game.init();
 
         // Game loop.
@@ -129,6 +130,7 @@ public class App
             GLFW.glfwSwapBuffers(window);
         }
 
+        // Call the free & close function before exiting.
         freeAndGo();
     }
 }

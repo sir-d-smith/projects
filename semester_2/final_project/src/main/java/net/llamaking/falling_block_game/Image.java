@@ -23,6 +23,8 @@ import java.nio.ByteBuffer;
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+// Basic class to contain image data.
+// Would be helpful to use proper getters/setters but oh well.
 public class Image
 {
     public ByteBuffer pixel_data;

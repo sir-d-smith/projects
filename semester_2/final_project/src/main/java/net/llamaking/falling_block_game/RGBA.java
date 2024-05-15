@@ -23,9 +23,9 @@ package net.llamaking.falling_block_game;
 
 public class RGBA extends RGB
 {
-    public int a;
+    public byte a;
 
-    public RGBA(int r, int g, int b, int a)
+    public RGBA(byte r, byte g, byte b, byte a)
     {
         super(r, g, b);
         this.a = a;

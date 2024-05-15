@@ -23,10 +23,12 @@ package net.llamaking.falling_block_game;
 
 public class Grid<T>
 {
+    // Private variables.
     private int width;
     private int height;
     private T[][] grid;
 
+    // Constructor. Initializes the grid array.
     @SuppressWarnings("unchecked")
     public Grid(int width, int height)
     {
@@ -36,6 +38,7 @@ public class Grid<T>
         this.grid = (T[][]) new Object[this.width][this.height];
     }
 
+    // Getters and setter.
     public int getWidth()
     {
         return this.width;

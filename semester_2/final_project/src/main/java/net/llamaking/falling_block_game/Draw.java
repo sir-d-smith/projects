@@ -25,21 +25,25 @@ import org.lwjgl.opengl.GL11;
 
 public class Draw 
 {
+    // Private variables we get from the main class.
     private int window_width;
     private int window_height;
 
+    // Constructor class.
     public Draw(int window_width, int window_height)
     {
         this.window_width = window_width;
         this.window_height = window_height;
     }
 
+    // Update the window width and height so the drawer knows where to draw.
     public void updateWindow(int window_width, int window_height)
     {
         this.window_width = window_width;
         this.window_height = window_height;
     }
 
+    // Convert pixel coordinates to -1.0f through 1.0f, as that's what the GPU wants.  
     private float xPixelToGLCoordinate(int x)
     {
         return (2.0f * x) / window_width - 1.0f;
@@ -60,8 +64,7 @@ public class Draw
         return 1.0f - (2.0f * (y + (window_height/2))) / window_height;
     }
 
-    // this is not how OpenGL was intended to be used.
-    // oh well, it is now!
+    // Draws a square at the desired location on the window.
     public void drawSquare(int x, int y, int width, int height, RGB color)
     {
         float gl_x = xPixelToGLCoordinate(x);
@@ -87,6 +90,7 @@ public class Draw
         return;
     }
 
+    // Draws a textured object at the desired location on the window.
     public void drawTexture(int x, int y, int width, int height, int texture_id, RGB color)
     {
         float gl_x = xPixelToGLCoordinate(x);

@@ -38,9 +38,27 @@ import org.lwjgl.system.MemoryStack;
 
 public class TextureLoader
 {
+    // Logger from the main class and other variables.
     protected Logger logger;
     protected String assets_json_path;
 
+    // Uploads an image to the GPU.
+    public int loadImageToGPU(Image image)
+    {
+        int texture_id = GL11.glGenTextures();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture_id);
+
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.x, image.y, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, image.pixel_data);
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+
+        image.texture_id = texture_id;
+
+        return texture_id;
+    }
+
+    // Loads an image from the disk to memory.
     public Image loadImage(String filepath)
     {
         Image result = new Image();
@@ -67,19 +85,12 @@ public class TextureLoader
             result.path = filepath;
         }
 
-        int texture_id = GL11.glGenTextures();
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture_id);
-
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, result.x, result.y, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, result.pixel_data);
-
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-
-        result.texture_id = texture_id;
+        result.texture_id = loadImageToGPU(result);
         
         return result;
     }
 
+    // Reads assets.json and loads textures from there.
     public Map<String, Image> loadTextures()
     {
         Map<String, Image> textures = new HashMap<>();
@@ -136,6 +147,40 @@ public class TextureLoader
         return textures;
     }
 
+    // Modifies the RGB values of an image.
+    // Not tested just yet.
+    public boolean modifyImageRGBA(Image image, RGBA rgba)
+    {
+        if (image == null)
+        {
+            return false;
+        }
+        if (image.channels < 4)
+        {
+            return false;
+        }
+
+        byte r, g, b, a;
+
+        image.pixel_data.rewind();
+        for (int i = 0; i < (image.x * image.y * image.channels); i++)
+        {
+            r = (byte) (image.pixel_data.get(i) & rgba.r);
+            g = (byte) (image.pixel_data.get(i + 1) & rgba.g);
+            b = (byte) (image.pixel_data.get(i + 2) & rgba.b);
+            a = (byte) (image.pixel_data.get(i + 3) & rgba.a);
+
+            image.pixel_data.put(i, r);
+            image.pixel_data.put(i, g);
+            image.pixel_data.put(i, b);
+            image.pixel_data.put(i, a);
+        }
+
+        return true;
+    }
+
+    // Constructor.
+    // Why is it all the way down here?
     public TextureLoader(Logger logger, String assets_json_path)
     {
         this.logger = logger;

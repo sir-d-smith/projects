@@ -25,9 +25,7 @@ import java.time.format.DateTimeFormatter;
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-// Please don't let me overcomplicate this.
-// It just needs to be simple. Dont. overcomplicate. it.
-// you've got this daniel
+// Logger class.
 public class Logger
 {
     // Creating the levels for the logger.
